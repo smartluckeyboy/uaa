@@ -1,0 +1,7 @@
+--- 
+applications: 
+- name: uaa
+  path: target/uaa-0.0.1-SNAPSHOT.jar
+  random-route: true
+  instances: 1
+  memory: 750M
