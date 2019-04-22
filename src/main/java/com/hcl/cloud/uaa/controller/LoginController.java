@@ -3,6 +3,7 @@ package com.hcl.cloud.uaa.controller;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,8 @@ import com.hcl.cloud.uaa.service.ILoginService;
 @Controller
 @RequestMapping("/api")
 public class LoginController {
+	
+	private static final Logger logger = LoggerFactory.getLogger(LoginController.class);
 
     @Autowired
     private ILoginService iLoginService;
@@ -31,6 +34,7 @@ public class LoginController {
     @ResponseBody
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest) {
         String token = iLoginService.login(loginRequest.getUsername(),loginRequest.getPassword());
+        logger.debug(" Access Token : " + token);
         HttpHeaders headers = new HttpHeaders();
         List<String> headerlist = new ArrayList<>();
         List<String> exposeList = new ArrayList<>();
@@ -45,20 +49,6 @@ public class LoginController {
         return new ResponseEntity<AuthResponse>(new AuthResponse(token), headers, HttpStatus.CREATED);
     }
     
-    
-    @CrossOrigin("*")
-    @PostMapping("/signout")
-    @ResponseBody
-    public ResponseEntity<AuthResponse> logout (@RequestHeader(value="Authorization") String token) {
-        HttpHeaders headers = new HttpHeaders();
-      if (iLoginService.logout(token)) {
-          headers.remove("Authorization");
-          return new ResponseEntity<AuthResponse>(new AuthResponse("logged out"), headers, HttpStatus.CREATED);
-      }
-        return new ResponseEntity<AuthResponse>(new AuthResponse("Logout Failed"), headers, HttpStatus.NOT_MODIFIED);
-    }
-    
-
     /**
      *
      * @param token
@@ -71,24 +61,13 @@ public class LoginController {
         return true;
     }
 
+	public ILoginService getiLoginService() {
+		return iLoginService;
+	}
 
-    @PostMapping("/signin/token")
-    @CrossOrigin("*")
-    @ResponseBody
-    public ResponseEntity<AuthResponse> createNewToken (@RequestHeader(value="Authorization") String token) {
-        String newToken = iLoginService.createNewToken(token);
-        HttpHeaders headers = new HttpHeaders();
-        List<String> headerList = new ArrayList<>();
-        List<String> exposeList = new ArrayList<>();
-        headerList.add("Content-Type");
-        headerList.add(" Accept");
-        headerList.add("X-Requested-With");
-        headerList.add("Authorization");
-        headers.setAccessControlAllowHeaders(headerList);
-        exposeList.add("Authorization");
-        headers.setAccessControlExposeHeaders(exposeList);
-        headers.set("Authorization", newToken);
-        return new ResponseEntity<AuthResponse>(new AuthResponse(newToken), headers, HttpStatus.CREATED);
-    }
+
+	public void setiLoginService(ILoginService iLoginService) {
+		this.iLoginService = iLoginService;
+	}
     
 }

@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 
 import com.hcl.cloud.uaa.bean.JwtToken;
 import com.hcl.cloud.uaa.repository.JwtTokenRepository;
-import com.hcl.cloud.uaa.security.JwtTokenProvider;
 import com.hcl.cloud.uaa.service.ITokenService;
 
 @Service

@@ -8,8 +8,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-@JsonDeserialize(as = MongoUserDetails.class)
-public class MongoUserDetails implements UserDetails
+
+@JsonDeserialize(as = CustomUserDetails.class)
+public class CustomUserDetails implements UserDetails
 {
 
     private String username;
@@ -20,7 +21,7 @@ public class MongoUserDetails implements UserDetails
     private boolean isEnabled;
     private List<GrantedAuthority> grantedAuthorities;
 
-    public MongoUserDetails(String username, String password,Integer active, boolean isLocked, boolean isExpired, boolean isEnabled, String [] authorities) {
+    public CustomUserDetails(String username, String password,Integer active, boolean isLocked, boolean isExpired, boolean isEnabled, String authorities) {
         this.username = username;
         this.password = password;
         this.active = active;
@@ -30,12 +31,12 @@ public class MongoUserDetails implements UserDetails
         this.grantedAuthorities = AuthorityUtils.createAuthorityList(authorities);
     }
 
-    public MongoUserDetails(String username,  String [] authorities) {
+    public CustomUserDetails(String username,  String [] authorities) {
         this.username = username;
         this.grantedAuthorities = AuthorityUtils.createAuthorityList(authorities);
     }
 
-    public MongoUserDetails() {
+    public CustomUserDetails() {
         super();
     }
 

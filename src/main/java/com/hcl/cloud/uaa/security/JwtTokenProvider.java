@@ -2,25 +2,23 @@ package com.hcl.cloud.uaa.security;
 
 import java.util.Base64;
 import java.util.Date;
-import java.util.List;
 
 import javax.annotation.PostConstruct;
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
+import com.hcl.cloud.constant.UaaConstant;
 import com.hcl.cloud.uaa.bean.JwtToken;
-import com.hcl.cloud.uaa.bean.MongoUserDetails;
 import com.hcl.cloud.uaa.bean.User;
-import com.hcl.cloud.uaa.exception.CustomException;
 import com.hcl.cloud.uaa.repository.JwtTokenRepository;
-import com.hcl.cloud.uaa.service.ILoginService;
 import com.hcl.cloud.uaa.service.ITokenService;
 
 import io.jsonwebtoken.Claims;
@@ -30,16 +28,14 @@ import io.jsonwebtoken.SignatureAlgorithm;
 
 @Component
 public class JwtTokenProvider {
+	
+	private static final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
     private static final String AUTH="auth";
     private static final String AUTHORIZATION="Authorization";
     private String secretKey="secret-key";
-    private long validityInMilliseconds = 60000; // 1m
 
     @Autowired
     private JwtTokenRepository jwtTokenRepository;
-    
-    @Autowired
-    private ILoginService iLoginService;
     
     @Autowired
     private ITokenService iTokenService;
@@ -52,14 +48,14 @@ public class JwtTokenProvider {
         secretKey = Base64.getEncoder().encodeToString(secretKey.getBytes());
     }
 
-    public String createToken(User user, List<String> roles) {
+    public String createToken(User user) {
 
         Claims claims = Jwts.claims().setSubject(user.getEmail());
-        claims.put(AUTH,roles);
+        claims.put(AUTH,user.getRole());
         JwtToken jwtToken = new JwtToken();
         
         Date now = new Date();
-        Date validity = new Date(now.getTime() + validityInMilliseconds);
+        Date validity = new Date(now.getTime() + UaaConstant.TOKEN_EXP_VALIDITY);
 
         String token =  Jwts.builder()//
                 .setClaims(claims)//
@@ -67,26 +63,27 @@ public class JwtTokenProvider {
                 .setExpiration(validity)//
                 .signWith(SignatureAlgorithm.HS256, secretKey)//
                 .compact();
+        
+        logger.debug(" Token Created Successfully");
        
         JwtToken tokenInfo = iTokenService.getInfoByEmail(user.getEmail());
         
         if (null != tokenInfo) {
         	tokenInfo.setToken(token);
         	jwtTokenRepository.save(tokenInfo);
+        	logger.debug(" Existing User token details saved successfully");
         } else {
         	jwtToken.setToken(token);
             jwtToken.setEmail(user.getEmail());
             jwtToken.setUserId(user.getUserId());
             jwtTokenRepository.save(jwtToken);
+            logger.debug(" New User token details saved successfully");
 		}
         return token;
     }
 
     public String resolveToken(HttpServletRequest req) {
         String bearerToken = req.getHeader(AUTHORIZATION);
-        /*if (bearerToken != null && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7, bearerToken.length());
-        }*/
         if (bearerToken != null ) {
             return bearerToken;
         }
@@ -98,28 +95,19 @@ public class JwtTokenProvider {
             return true;
     }
     public boolean isTokenPresentInDB (String token) {
-        return jwtTokenRepository.findById(token).isPresent();
-    }
-    //user details with out database hit
-    public UserDetails getUserDetails(String token) {
-        String userName =  getUsername(token);
-        List<String> roleList = getRoleList(token);
-        UserDetails userDetails = new MongoUserDetails(userName,roleList.toArray(new String[roleList.size()]));
-        return userDetails;
-    }
-    public List<String> getRoleList(String token) {
-        return (List<String>) Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).
-                getBody().get(AUTH);
+    	boolean validToken = false;
+        JwtToken jwtToken = jwtTokenRepository.findBytoken(token);
+        if (null != jwtToken && token.equals(jwtToken.getToken())) {
+        	validToken = true;
+        }
+        return validToken;
     }
 
     public String getUsername(String token) {
         return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
     }
     public Authentication getAuthentication(String token) {
-        //using data base: uncomment when you want to fetch data from data base
         UserDetails userDetails = userDetailsService.loadUserByUsername(getUsername(token));
-        //from token take user value. comment below line for changing it taking from data base
-        //UserDetails userDetails = getUserDetails(token);
         return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
     }
 

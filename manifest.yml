@@ -5,3 +5,5 @@ applications:
   random-route: true
   instances: 1
   memory: 750M
+  services:
+  - dbService

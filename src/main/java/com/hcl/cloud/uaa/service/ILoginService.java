@@ -1,9 +1,9 @@
 package com.hcl.cloud.uaa.service;
 
-import com.hcl.cloud.uaa.bean.JwtToken;
 import com.hcl.cloud.uaa.bean.User;
 
 public interface ILoginService {
+	
     String login(String username, String password);
     
     User saveUser(User user);

@@ -1,10 +1,9 @@
 package com.hcl.cloud.uaa.service.impl;
 
-import java.util.List;
-import java.util.Objects;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -14,8 +13,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.hcl.cloud.uaa.bean.JwtToken;
-import com.hcl.cloud.uaa.bean.Role;
 import com.hcl.cloud.uaa.bean.User;
+import com.hcl.cloud.uaa.controller.LoginController;
 import com.hcl.cloud.uaa.exception.CustomException;
 import com.hcl.cloud.uaa.repository.JwtTokenRepository;
 import com.hcl.cloud.uaa.repository.UserRepository;
@@ -25,6 +24,8 @@ import com.hcl.cloud.uaa.service.ILoginService;
 @Service
 public class LoginServiceImpl implements ILoginService {
 	
+	private static final Logger logger = LoggerFactory.getLogger(LoginServiceImpl.class);
+		
     @Autowired
     private PasswordEncoder passwordEncoder;
     
@@ -45,17 +46,19 @@ public class LoginServiceImpl implements ILoginService {
         try {
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username,
                     password));
+            
             User user = userRepository.findByEmail(username);
-            if (user == null || user.getRole() == null || user.getRole().isEmpty()) {
-                throw new CustomException("Invalid username or password.", HttpStatus.UNAUTHORIZED);
+            logger.debug(" User Details : " + user.toString());
+            if (user == null  || user.getRole() == null || user.getRole().isEmpty()) {
+            	logger.debug(" Invalid username or password.");
+                throw new CustomException("Invalid username or password.", HttpStatus.UNAUTHORIZED);               
             }
-            //NOTE: normally we dont need to add "ROLE_" prefix. Spring does automatically for us.
-            //Since we are using custom token using JWT we should add ROLE_ prefix
-            String token =  jwtTokenProvider.createToken(user, user.getRole().stream()
-                    .map((Role role)-> "ROLE_"+role.getRole()).filter(Objects::nonNull).collect(Collectors.toList()));
+            
+            String token = jwtTokenProvider.createToken(user);
             return token;
 
         } catch (AuthenticationException e) {
+        	logger.debug(" Invalid username or password");
             throw new CustomException("Invalid username or password.", HttpStatus.UNAUTHORIZED);
         }
     }
@@ -86,9 +89,11 @@ public class LoginServiceImpl implements ILoginService {
     public User saveUser(User user) {
     	
     	user.setUserId(UUID.randomUUID().toString());
-    	System.out.println("User id is :"+ user.getUserId());
-        user.setPassword(passwordEncoder.encode(user.getPassword()) );     
-        return userRepository.save(user);
+		logger.debug(" User id created :"+ user.getUserId());
+        user.setPassword(passwordEncoder.encode(user.getPassword()) );    
+        user = userRepository.save(user);
+        logger.debug(" User details saved successfully");
+        return user;
     }
 
     @Override
@@ -106,8 +111,7 @@ public class LoginServiceImpl implements ILoginService {
     public String createNewToken(String token) {
         String username = jwtTokenProvider.getUsername(token);
         User user = userRepository.findByEmail(username);
-        List<String>roleList = jwtTokenProvider.getRoleList(token);
-        String newToken =  jwtTokenProvider.createToken(user,roleList);
+        String newToken =  jwtTokenProvider.createToken(user);
         return newToken;
     }
 }
