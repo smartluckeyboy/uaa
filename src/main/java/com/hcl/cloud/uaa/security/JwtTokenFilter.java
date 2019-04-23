@@ -18,7 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.filter.GenericFilterBean;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hcl.cloud.uaa.controller.TokenDecoderController;
+import com.hcl.cloud.uaa.exception.ErrorResponse;
 
 import io.jsonwebtoken.JwtException;
 public class JwtTokenFilter extends GenericFilterBean {
@@ -43,7 +43,7 @@ public class JwtTokenFilter extends GenericFilterBean {
 				return;
             }
             try {
-                jwtTokenProvider.validateToken(token) ;
+                jwtTokenProvider.validateToken(token);
                 logger.debug(" Token Validated");
             } catch (JwtException | IllegalArgumentException e) {
             	logger.debug(" Token is not Valid");
@@ -89,4 +89,10 @@ public class JwtTokenFilter extends GenericFilterBean {
         String serialized = new ObjectMapper().writeValueAsString(eErrorResponse);
         return serialized.getBytes();
     }
+
+	public void setJwtTokenProvider(JwtTokenProvider jwtTokenProvider) {
+		this.jwtTokenProvider = jwtTokenProvider;
+	}
+    
+    
 }

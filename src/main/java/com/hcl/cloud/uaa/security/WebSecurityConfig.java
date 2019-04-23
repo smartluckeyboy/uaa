@@ -51,7 +51,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers("/*/")//
                 .antMatchers("/eureka/**")//
                 .antMatchers("/userDetails/add")
-                .antMatchers("/decode/")
+                .antMatchers("/tokenInfo/")
                 .antMatchers(HttpMethod.OPTIONS, "/**"); // Request type options should be allowed.
     }
 

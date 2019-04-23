@@ -1,4 +1,4 @@
-package com.hcl.cloud.uaa.security;
+package com.hcl.cloud.uaa.exception;
 
 public class ErrorResponse {
 	

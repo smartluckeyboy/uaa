@@ -14,7 +14,6 @@ import org.springframework.stereotype.Service;
 
 import com.hcl.cloud.uaa.bean.JwtToken;
 import com.hcl.cloud.uaa.bean.User;
-import com.hcl.cloud.uaa.controller.LoginController;
 import com.hcl.cloud.uaa.exception.CustomException;
 import com.hcl.cloud.uaa.repository.JwtTokenRepository;
 import com.hcl.cloud.uaa.repository.UserRepository;
@@ -84,17 +83,6 @@ public class LoginServiceImpl implements ILoginService {
 	public void setJwtTokenRepository(JwtTokenRepository jwtTokenRepository) {
 		this.jwtTokenRepository = jwtTokenRepository;
 	}
-
-	@Override
-    public User saveUser(User user) {
-    	
-    	user.setUserId(UUID.randomUUID().toString());
-		logger.debug(" User id created :"+ user.getUserId());
-        user.setPassword(passwordEncoder.encode(user.getPassword()) );    
-        user = userRepository.save(user);
-        logger.debug(" User details saved successfully");
-        return user;
-    }
 
     @Override
     public boolean logout(String token) {

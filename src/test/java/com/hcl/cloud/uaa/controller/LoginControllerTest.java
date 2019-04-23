@@ -1,4 +1,4 @@
-package com.hcl.cloud;
+package com.hcl.cloud.uaa.controller;
 
 import static org.junit.Assert.assertEquals;
 

@@ -1,17 +1,13 @@
-package com.hcl.cloud;
+package com.hcl.cloud.uaa.controller;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
 
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.MockitoAnnotations;
 import org.powermock.api.mockito.PowerMockito;
 import org.powermock.modules.junit4.PowerMockRunner;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
 
 import com.hcl.cloud.uaa.bean.User;
 import com.hcl.cloud.uaa.exception.CustomException;
@@ -48,11 +44,10 @@ public class LoginServiceTest {
 		user.setEnabled(true);
 		user.setExpired(false);
 		user.setId(1L);
-		user.setLastName("sah");
+		user.setLast_name("sah");
 		user.setLoacked(false);
-		user.setName("harit");
+		user.setUserName("9355cae5-a082-409d-8aaa-f9556982d767");
 		user.setPassword("$2a$12$VNW1nJ5XTdw8nxYlqUs/ZOPwxfP2eHsmNOyn.XzUFNiEL94XyODeS");
-		user.setUserId("9355cae5-a082-409d-8aaa-f9556982d767");
 		user.setRole("admin");
 		
 		PowerMockito.when(userRepository.findByEmail("harit@hcl.com")).thenReturn(user);

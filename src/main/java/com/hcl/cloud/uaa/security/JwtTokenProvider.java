@@ -57,11 +57,11 @@ public class JwtTokenProvider {
         Date now = new Date();
         Date validity = new Date(now.getTime() + UaaConstant.TOKEN_EXP_VALIDITY);
 
-        String token =  Jwts.builder()//
-                .setClaims(claims)//
-                .setIssuedAt(now)//
-                .setExpiration(validity)//
-                .signWith(SignatureAlgorithm.HS256, secretKey)//
+        String token =  Jwts.builder()
+                .setClaims(claims)
+                .setIssuedAt(now)
+                .setExpiration(validity)
+                .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
         
         logger.debug(" Token Created Successfully");
@@ -75,7 +75,7 @@ public class JwtTokenProvider {
         } else {
         	jwtToken.setToken(token);
             jwtToken.setEmail(user.getEmail());
-            jwtToken.setUserId(user.getUserId());
+            jwtToken.setUserId(user.getUserName());
             jwtTokenRepository.save(jwtToken);
             logger.debug(" New User token details saved successfully");
 		}
@@ -118,5 +118,15 @@ public class JwtTokenProvider {
 	public void setJwtTokenRepository(JwtTokenRepository jwtTokenRepository) {
 		this.jwtTokenRepository = jwtTokenRepository;
 	}
+
+	public ITokenService getiTokenService() {
+		return iTokenService;
+	}
+
+	public void setiTokenService(ITokenService iTokenService) {
+		this.iTokenService = iTokenService;
+	}
+	
+	
 
 }
