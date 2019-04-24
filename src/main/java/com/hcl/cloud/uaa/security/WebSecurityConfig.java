@@ -52,6 +52,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/eureka/**")//
                 .antMatchers("user/user-management")
                 .antMatchers("/tokenInfo/")
+                .antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**", "/swagger-ui.html", "/webjars/**")
                 .antMatchers(HttpMethod.OPTIONS, "/**"); // Request type options should be allowed.
     }
 

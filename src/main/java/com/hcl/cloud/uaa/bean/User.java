@@ -15,301 +15,308 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="USER")
+@Table(name = "USER")
 public class User {
+    /**
+     * Id.
+     */
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private long id;
+    /**
+     * userId.
+     */
+    @Column(name = "userId")
+    private String userName;
+    /**
+     * email.
+     */
+    @Column(name = "email", unique = true)
+    private String email;
+    /**
+     * firstName.
+     */
+    private String firstName;
+    /**
+     * lastName.
+     */
+    private String lastName;
+    /**
+     * userAddress.
+     */
+    @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinColumn(name = "user_id")
+    private Set<Address> userAddress = new HashSet<>();
+    /**
+     * password.
+     */
+    private String password;
+    /**
+     * phoneNumber.
+     */
+    private long phoneNumber;
+    /**
+     * role.
+     */
+    private String role;
+    /**
+     * active.
+     */
+    private Integer active = 1;
+    /**
+     * isLoacked.
+     */
+    private boolean isLoacked = false;
+    /**
+     * isExpired.
+     */
+    private boolean isExpired = false;
+    /**
+     * isEnabled.
+     */
+    private boolean isEnabled = true;
+    
+    private boolean active_user=true;
 
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	@Column(name="id")
-	private long id;
-	@Column(name = "userId")
-	private String userName;
-	@Column(name = "email" , unique=true)
-	private String email;
-	private String first_name;
-	private String last_name;
-	@OneToMany(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
-	@JoinColumn(name="user_id")
-	private Set<Address> user_address =  new HashSet<>();
-	private String password;
-	private long phone_number;
-	//private boolean active_user = true;
-	private String role;
-	private Integer active=1; 
-	private boolean isLoacked=false;   
-	private boolean isExpired=false;  
-	private boolean isEnabled=true;
-
-	/**
-	 * Default constructor
-	 */
-	public User() {
+    public boolean isActive_user() {
+		return active_user;
 	}
 
-	
-	/**
-	 *
-	 * @return the id
-	 */
-	public long getId() {
-		return id;
-	}
-
-
-	/**
-	 *
-	 * @param id the id to set
-	 */
-	
-	public void setId(long id) {
-		this.id = id;
-	}
-
-	
-	/**
-	 *
-	 * @return the user_address
-	 */
-	public Set<Address> getUser_address() {
-		return user_address;
-	}
-
-
-	/**
-	 *
-	 * @param user_address the user_address to set
-	 */
-	public void setUser_address(Set<Address> user_address) {
-		this.user_address = user_address;
-	}
-
-	/**
-	 * 
-	 * @return the role
-	 */
-	public String getRole() {
-		return role;
-	}
-
-
-	/**
-	 *
-	 * @param role the role to set
-	 */
-	@Column(name = "role")
-	public void setRole(String role) {
-		this.role = role;
-	}
-
-	
-	/**
-	 *
-	 * @return the userName
-	 */
-	public String getUserName() {
-		return userName;
-	}
-
-
-	/**
-	 *
-	 * @param userName the userName to set
-	 */
-
-	public void setUserName(String userName) {
-		this.userName = userName;
-	}
-
-
-	/**
-	 *
-	 * @return the email
-	 */
-	public String getEmail() {
-		return email;
+	public void setActive_user(boolean active_user) {
+		this.active_user = active_user;
 	}
 
 	/**
-	 *
-	 * @param email
-	 *            the email to set
-	 */
-	@Column(name = "email")
-	public void setEmail(String email) {
-		this.email = email;
-	}
+     * Default constructor.
+     */
+    public User() {
+    }
 
-	/**
-	 *
-	 * @return the first_name
-	 */
-	public String getFirst_name() {
-		return first_name;
-	}
+    /**
+     *
+     * @return the id.
+     */
+    public long getId() {
+        return id;
+    }
 
-	/**
-	 *
-	 * @param first_name
-	 *            the first_name to set
-	 */
-	@Column(name = "first_name")
-	public void setFirst_name(String first_name) {
-		this.first_name = first_name;
-	}
+    /**
+     *
+     * @param id
+     *            the id to set.
+     */
 
-	/**
-	 *
-	 * @return the last_name
-	 */
-	public String getLast_name() {
-		return last_name;
-	}
+    public void setId(final long id) {
+        this.id = id;
+    }
 
-	/**
-	 *
-	 * @param last_name
-	 *            the last_name to set
-	 */
-	@Column(name = "lat_name")
-	public void setLast_name(String last_name) {
-		this.last_name = last_name;
-	}
+    /**
+     *
+     * @return tag for userAddress.
+     */
+    public Set<Address> getUserAddress() {
+        return userAddress;
+    }
 
-	/**
-	 *
-	 * @return the password
-	 */
-	public String getPassword() {
-		return password;
-	}
+    /**
+     *
+     * @param userAddress
+     *            the userAddress to set.
+     */
+    public void setUserAddress(final Set<Address> userAddress) {
+        this.userAddress = userAddress;
+    }
 
-	/**
-	 *
-	 * @param password
-	 *            the password to set
-	 */
-	@Column(name = "password")
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    /**
+     *
+     * @return tag for role.
+     */
+    public String getRole() {
+        return role;
+    }
 
-	/**
-	 *
-	 * @return the phone_number
-	 */
-	public long getPhone_number() {
-		return phone_number;
-	}
+    /**
+     *
+     * @param role
+     *            the role to set.
+     */
+    @Column(name = "role")
+    public void setRole(final String role) {
+        this.role = role;
+    }
 
-	/**
-	 *
-	 * @param phone_number
-	 *            the phone_number to set
-	 */
-	@Column(name = "phone")
-	public void setPhone_number(long phone_number) {
-		this.phone_number = phone_number;
-	}
+    /**
+     *
+     * @return tag for userName.
+     */
+    public String getUserName() {
+        return userName;
+    }
 
+    /**
+     *
+     * @param userName
+     *            the userName to set.
+     */
 
-	/**
-	 *
-	 * @return the active
-	 */
-	public Integer getActive() {
-		return active;
-	}
+    public void setUserName(final String userName) {
+        this.userName = userName;
+    }
 
-	/**
-	 *
-	 * @param id
-	 * @param userName
-	 * @param email
-	 * @param first_name
-	 * @param last_name
-	 * @param user_address
-	 * @param password
-	 * @param phone_number
-	 * @param role
-	 * @param active
-	 * @param isLoacked
-	 * @param isExpired
-	 * @param isEnabled
-	 */
-	public User(long id, String userName, String email, String first_name, String last_name, Set<Address> user_address,
-			String password, long phone_number, String role, Integer active, boolean isLoacked, boolean isExpired,
-			boolean isEnabled) {
-		super();
-		this.id = id;
-		this.userName = userName;
-		this.email = email;
-		this.first_name = first_name;
-		this.last_name = last_name;
-		this.user_address = user_address;
-		this.password = password;
-		this.phone_number = phone_number;
-		this.role = role;
-		this.active = active;
-		this.isLoacked = isLoacked;
-		this.isExpired = isExpired;
-		this.isEnabled = isEnabled;
-	}
+    /**
+     *
+     * @return tag for email.
+     */
+    public String getEmail() {
+        return email;
+    }
 
-	
-	/**
-	 *
-	 * @param active the active to set
-	 */
-	public void setActive(Integer active) {
-		this.active = active;
-	}
+    /**
+     *
+     * @param email
+     *            the email to set.
+     */
+    @Column(name = "email")
+    public void setEmail(final String email) {
+        this.email = email;
+    }
 
-	/**
-	 *
-	 * @return the isLoacked
-	 */
-	public boolean isLoacked() {
-		return isLoacked;
-	}
+    /**
+     *
+     * @return tag for password
+     */
+    public String getPassword() {
+        return password;
+    }
 
-	/**
-	 *
-	 * @param isLoacked the isLoacked to set
-	 */
-	public void setLoacked(boolean isLoacked) {
-		this.isLoacked = isLoacked;
-	}
+    /**
+     *
+     * @param password
+     *            the password to set.
+     */
+    @Column(name = "password")
+    public void setPassword(final String password) {
+        this.password = password;
+    }
 
-	/**
-	 *
-	 * @return the isExpired
-	 */
-	public boolean isExpired() {
-		return isExpired;
-	}
+    /**
+     *
+     * @return tag for active.
+     */
+    public Integer getActive() {
+        return active;
+    }
 
-	/**
-	 *
-	 * @param isExpired the isExpired to set
-	 */
-	public void setExpired(boolean isExpired) {
-		this.isExpired = isExpired;
-	}
+    /**
+     *
+     * @param active
+     *            the active to set.
+     */
+    public void setActive(Integer active) {
+        this.active = active;
+    }
 
-	/**
-	 *
-	 * @return the isEnabled
-	 */
-	public boolean isEnabled() {
-		return isEnabled;
-	}
+    /**
+     *
+     * @return tag isLoacked.
+     */
+    public boolean isLoacked() {
+        return isLoacked;
+    }
 
+    /**
+     *
+     * @param isLoacked
+     *            the isLoacked to set.
+     */
+    public void setLoacked(boolean isLoacked) {
+        this.isLoacked = isLoacked;
+    }
 
-	/**
-	 *
-	 * @param isEnabled the isEnabled to set
-	 */
-	public void setEnabled(boolean isEnabled) {
-		this.isEnabled = isEnabled;
-	}
+    /**
+     *
+     * @return tag isExpired.
+     */
+    public boolean isExpired() {
+        return isExpired;
+    }
+
+    /**
+     *
+     * @param isExpired
+     *            the isExpired to set.
+     */
+    public void setExpired(final boolean isExpired) {
+        this.isExpired = isExpired;
+    }
+
+    /**
+     *
+     * @return tag isEnabled.
+     */
+    public boolean isEnabled() {
+        return isEnabled;
+    }
+
+    /**
+     *
+     * @param isEnabled
+     *            the isEnabled to set.
+     */
+    public void setEnabled(final boolean isEnabled) {
+        this.isEnabled = isEnabled;
+    }
+
+    /**
+     *
+     * @return tag firstName.
+     */
+    public String getFirstName() {
+        return firstName;
+    }
+
+    /**
+     *
+     * @param firstName
+     *            the firstName to set.
+     */
+    public void setFirstName(final String firstName) {
+        this.firstName = firstName;
+    }
+
+    /**
+     *
+     * @return tag lastName.
+     */
+    public String getLastName() {
+        return lastName;
+    }
+
+    /**
+     *
+     * @param lastName
+     *            the lastName to set.
+     */
+    public void setLastName(final String lastName) {
+        this.lastName = lastName;
+    }
+
+    /**
+     *
+     * @return tag phoneNumber.
+     */
+    public long getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    /**
+     *
+     * @param phoneNumber
+     *            the phoneNumber to set.
+     */
+    public void setPhoneNumber(long phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
 }

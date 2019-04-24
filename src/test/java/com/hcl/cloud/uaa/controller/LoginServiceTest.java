@@ -44,7 +44,7 @@ public class LoginServiceTest {
 		user.setEnabled(true);
 		user.setExpired(false);
 		user.setId(1L);
-		user.setLast_name("sah");
+		user.setLastName("sah");
 		user.setLoacked(false);
 		user.setUserName("9355cae5-a082-409d-8aaa-f9556982d767");
 		user.setPassword("$2a$12$VNW1nJ5XTdw8nxYlqUs/ZOPwxfP2eHsmNOyn.XzUFNiEL94XyODeS");

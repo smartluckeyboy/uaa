@@ -114,6 +114,17 @@
 			<version>1.7.13</version>
 		</dependency>
 		
+		
+    <!-- <dependency>
+		  <groupId>org.springframework.boot</groupId>
+		  <artifactId>spring-boot-actuator</artifactId>
+		</dependency>
+		
+		
+		<dependency>
+		  <groupId>org.springframework.boot</groupId>
+		  <artifactId>spring-boot-starter-webflux</artifactId>
+		</dependency> -->
 	</dependencies>
 
 	<dependencyManagement>
@@ -190,6 +201,15 @@
 	                             </goals>
 	                      </execution>
 	               </executions>
+	               <configuration>
+					 <excludes>
+					   <exclude>com.hcl.cloud.uaa.bean.*</exclude>
+					   <exclude>com.hcl.cloud.uaa.constant.*</exclude>
+					   <exclude>com.hcl.cloud.uaa.exception.*</exclude>
+					   <exclude>com.hcl.cloud.uaa.repository.*</exclude>
+					   <exclude>com.hcl.cloud.uaa.swagger.*</exclude>
+					</excludes>
+				</configuration>
 	         </plugin>
 		</plugins>
 	</build>
