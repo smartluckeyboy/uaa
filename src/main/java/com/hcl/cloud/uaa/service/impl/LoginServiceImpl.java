@@ -1,7 +1,5 @@
 package com.hcl.cloud.uaa.service.impl;
 
-import java.util.UUID;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,9 +58,7 @@ public class LoginServiceImpl implements ILoginService {
             throw new CustomException("Invalid username or password.", HttpStatus.UNAUTHORIZED);
         }
     }
-    
    
-    
     public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
 		this.passwordEncoder = passwordEncoder;
 	}

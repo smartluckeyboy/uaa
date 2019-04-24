@@ -21,7 +21,7 @@ import com.hcl.cloud.uaa.bean.JwtToken;
 import com.hcl.cloud.uaa.service.ITokenService;
 
 @RestController
-@RequestMapping("/tokenInfo")
+@RequestMapping("/uaa")
 public class TokenDecoderController {
 
 	private static final Logger logger = LoggerFactory.getLogger(TokenDecoderController.class);
@@ -30,7 +30,7 @@ public class TokenDecoderController {
 	private ITokenService iTokenService;
 
 	@CrossOrigin("*")
-	@GetMapping
+	@GetMapping("/tokenInfo")
 	public ResponseEntity<AuthTokenResponse> getCart(@RequestHeader(value = "Authorization") String token) {
 
 		String userId = null;
