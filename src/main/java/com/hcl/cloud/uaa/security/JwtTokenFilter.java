@@ -35,7 +35,7 @@ public class JwtTokenFilter extends GenericFilterBean {
             throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
-        logger.info("PreFilter: " + String.format("%s request to %s", request.getMethod(), request.getRequestURL().toString()));
+        //logger.info("PreFilter: " + String.format("%s request to %s", request.getMethod(), request.getRequestURL().toString()));
         String token = jwtTokenProvider.resolveToken((HttpServletRequest) req);
         if (token != null) {
             if (!jwtTokenProvider.isTokenPresentInDB(token)) {
