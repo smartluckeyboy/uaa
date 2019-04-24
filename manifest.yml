@@ -6,6 +6,6 @@ applications:
   memory: 750M
   services:
   - dbService
-  - logit-ssl-drain
+  - log-drain
   routes:
   - route: uaa.apps.cnpsandbox.dryice01.in.hclcnlabs.com
