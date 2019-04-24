@@ -37,6 +37,7 @@ public class JwtTokenFilter extends GenericFilterBean {
         HttpServletResponse response = (HttpServletResponse) res;
         //logger.info("PreFilter: " + String.format("%s request to %s", request.getMethod(), request.getRequestURL().toString()));
         String token = jwtTokenProvider.resolveToken((HttpServletRequest) req);
+        logger.info("JWT Token from doFilter :: " + token);
         if (token != null) {
             if (!jwtTokenProvider.isTokenPresentInDB(token)) {
             	logger.error(" Token not present in DB");
