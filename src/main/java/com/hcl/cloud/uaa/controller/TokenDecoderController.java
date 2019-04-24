@@ -45,7 +45,7 @@ public class TokenDecoderController {
 		if (null != tokenInfo && !StringUtils.isEmpty(tokenInfo.getUserId())) {
 
 			logger.debug(" UserId: " + tokenInfo.getUserId());
-			userId = tokenInfo.getEmail();
+			userId = tokenInfo.getUserId();
 		}
 
 		return new ResponseEntity<AuthTokenResponse>(new AuthTokenResponse(userId), headers, HttpStatus.FOUND);

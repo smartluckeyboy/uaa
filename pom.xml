@@ -18,7 +18,6 @@
 	<properties>
 		<java.version>1.8</java.version>
 		<spring-cloud.version>Greenwich.SR1</spring-cloud.version>
-		<skipTests>true</skipTests>
 	</properties>
 
 	<dependencies>
@@ -134,9 +133,6 @@
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
-				<!-- <configuration>
-					<skipTests>${skipTests}</skipTests>
-				</configuration> -->
 			</plugin>
 			
 			<!-- <plugin>

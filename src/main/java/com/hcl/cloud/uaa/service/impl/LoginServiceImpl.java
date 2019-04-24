@@ -47,7 +47,6 @@ public class LoginServiceImpl implements ILoginService {
                     password));
             
             User user = userRepository.findByEmail(username);
-            logger.debug(" User Details : " + user.toString());
             if (user == null  || user.getRole() == null || user.getRole().isEmpty()) {
             	logger.debug(" Invalid username or password.");
                 throw new CustomException("Invalid username or password.", HttpStatus.UNAUTHORIZED);               

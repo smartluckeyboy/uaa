@@ -22,7 +22,7 @@ import com.hcl.cloud.uaa.bean.LoginRequest;
 import com.hcl.cloud.uaa.service.ILoginService;
 
 @Controller
-@RequestMapping("/api")
+@RequestMapping("/uaa")
 public class LoginController {
 	public static final Logger logger=LoggerFactory.getLogger(LoginController.class);
     @Autowired
