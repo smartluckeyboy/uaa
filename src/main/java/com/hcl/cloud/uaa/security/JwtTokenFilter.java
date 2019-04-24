@@ -35,18 +35,19 @@ public class JwtTokenFilter extends GenericFilterBean {
             throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
+        logger.info("PreFilter: " + String.format("%s request to %s", request.getMethod(), request.getRequestURL().toString()));
         String token = jwtTokenProvider.resolveToken((HttpServletRequest) req);
         if (token != null) {
             if (!jwtTokenProvider.isTokenPresentInDB(token)) {
-            	logger.debug(" Token not present in DB");
+            	logger.error(" Token not present in DB");
                 throwError(request,response);
 				return;
             }
             try {
                 jwtTokenProvider.validateToken(token);
-                logger.debug(" Token Validated");
+                logger.error(" Token Validated");
             } catch (JwtException | IllegalArgumentException e) {
-            	logger.debug(" Token is not Valid");
+            	logger.error(" Token is not Valid");
             	throwError(request,response);
 				return;
             }
