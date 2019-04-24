@@ -15,9 +15,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
-import com.hcl.cloud.constant.UaaConstant;
 import com.hcl.cloud.uaa.bean.JwtToken;
 import com.hcl.cloud.uaa.bean.User;
+import com.hcl.cloud.uaa.constant.UaaConstant;
 import com.hcl.cloud.uaa.repository.JwtTokenRepository;
 import com.hcl.cloud.uaa.service.ITokenService;
 

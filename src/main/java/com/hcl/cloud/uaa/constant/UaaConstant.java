@@ -1,4 +1,4 @@
-package com.hcl.cloud.constant;
+package com.hcl.cloud.uaa.constant;
 
 public class UaaConstant {
 
