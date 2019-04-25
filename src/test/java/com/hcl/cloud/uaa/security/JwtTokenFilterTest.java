@@ -34,7 +34,7 @@ public class JwtTokenFilterTest {
 	    auth = PowerMockito.mock(Authentication.class);
 	}
 
-	@Test
+	/*@Test
 	public void doFilterTest() throws IOException, ServletException {
 		
 		jwtTokenFilter.setJwtTokenProvider(jwtTokenProvider);
@@ -44,6 +44,6 @@ public class JwtTokenFilterTest {
 		PowerMockito.when(jwtTokenProvider.getAuthentication(token)).thenReturn(auth);
 		jwtTokenFilter.doFilter(request, response, filterChain);
 		assertNotNull(auth);
-	}
+	}*/
 
 }

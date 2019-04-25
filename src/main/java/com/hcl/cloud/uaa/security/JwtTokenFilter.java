@@ -36,16 +36,16 @@ public class JwtTokenFilter extends GenericFilterBean {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
         String token = jwtTokenProvider.resolveToken((HttpServletRequest) req);
-        logger.info("JWT Token from doFilter :: " + token);
+        logger.info("JWT Token from doFilter :: " + token + " and Request URL is :: "+ request.getRequestURL().toString());
         if (token != null) {
             if (!jwtTokenProvider.isTokenPresentInDB(token)) {
-            	logger.error(" Token not present in DB..");
+            	logger.error(" Token not present in DB");
                 throwError(request,response);
 				return;
             }
             try {
                 jwtTokenProvider.validateToken(token);
-                logger.error(" Token Validated..");
+                logger.error(" Token Validated");
             } catch (JwtException | IllegalArgumentException e) {
             	logger.error(" Token is not Valid");
             	throwError(request,response);
@@ -53,11 +53,7 @@ public class JwtTokenFilter extends GenericFilterBean {
             }
             Authentication auth = token != null ? jwtTokenProvider.getAuthentication(token) : null;
             SecurityContextHolder.getContext().setAuthentication(auth);
-        } else {
-        	logger.error(" Token not passed in request header.");
-        	throwError(request,response);
-			return;
-		}
+        }
         filterChain.doFilter(req, res);
 
     }
