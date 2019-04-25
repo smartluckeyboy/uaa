@@ -27,7 +27,6 @@ public class User {
     /**
      * userId.
      */
-    @Column(name = "userId")
     private String userName;
     /**
      * email.
