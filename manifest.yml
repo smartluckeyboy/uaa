@@ -7,5 +7,6 @@ applications:
   services:
   - dbService
   - log-drain
+  - newrelic
   routes:
   - route: uaa.apps.cnpsandbox.dryice01.in.hclcnlabs.com
