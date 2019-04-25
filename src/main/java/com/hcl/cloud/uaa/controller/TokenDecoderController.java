@@ -31,7 +31,7 @@ public class TokenDecoderController {
 
 	@CrossOrigin("*")
 	@GetMapping("/tokenInfo")
-	public ResponseEntity<AuthTokenResponse> getCart(@RequestHeader(value = "Authorization") String token) {
+	public ResponseEntity<AuthTokenResponse> getCart(@RequestHeader(value = "accessToken") String token) {
 
 		String userId = null;
 

@@ -40,11 +40,11 @@ public class LoginController {
         headerlist.add("Content-Type");
         headerlist.add(" Accept");
         headerlist.add("X-Requested-With");
-        headerlist.add("Authorization");
+        headerlist.add("accessToken");
         headers.setAccessControlAllowHeaders(headerlist);
-        exposeList.add("Authorization");
+        exposeList.add("accessToken");
         headers.setAccessControlExposeHeaders(exposeList);
-        headers.set("Authorization", token);
+        headers.set("accessToken", token);
         return new ResponseEntity<AuthResponse>(new AuthResponse(token), headers, HttpStatus.CREATED);
     }
     
@@ -56,7 +56,7 @@ public class LoginController {
      */
     @PostMapping("/valid/token")
     @ResponseBody
-    public Boolean isValidToken (@RequestHeader(value="Authorization") String token) {
+    public Boolean isValidToken (@RequestHeader(value="accessToken") String token) {
         return true;
     }
 

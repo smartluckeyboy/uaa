@@ -31,7 +31,7 @@ public class JwtTokenProvider {
 	
 	private static final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
     private static final String AUTH="auth";
-    private static final String AUTHORIZATION="Authorization";
+    private static final String ACCESSTOKEN="accessToken";
     private String secretKey="secret-key";
 
     @Autowired
@@ -83,7 +83,7 @@ public class JwtTokenProvider {
     }
 
     public String resolveToken(HttpServletRequest req) {
-        String bearerToken = req.getHeader(AUTHORIZATION);
+        String bearerToken = req.getHeader(ACCESSTOKEN);
         if (bearerToken != null ) {
             return bearerToken;
         }
