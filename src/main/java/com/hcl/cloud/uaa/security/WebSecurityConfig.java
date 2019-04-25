@@ -47,10 +47,10 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        // Allow eureka client to be accessed without authentication
+    	// Allow eureka client to be accessed without authentication
         web.ignoring()//.antMatchers("/*/")//
                 .antMatchers("/eureka/**")//
-                .antMatchers("/**/user/signup/**") // ("/userDetails/add")//
+                .antMatchers("/**/user/signup") // ("/userDetails/add")//
                 .antMatchers("/uaa/tokenInfo/")
                 .antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**", "/swagger-ui.html", "/webjars/**")
                 .antMatchers(HttpMethod.OPTIONS, "/**"); // Request type options should be allowed.
