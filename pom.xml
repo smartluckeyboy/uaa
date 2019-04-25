@@ -25,20 +25,11 @@
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
-	<!-- 	<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-server</artifactId>
-		</dependency>  -->
-		<!-- <dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-zuul</artifactId>
-		</dependency>
-		
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-devtools</artifactId>
-			<scope>runtime</scope>
-		</dependency> -->
+		<!-- <dependency> <groupId>org.springframework.cloud</groupId> <artifactId>spring-cloud-starter-netflix-eureka-server</artifactId> 
+			</dependency> -->
+		<!-- <dependency> <groupId>org.springframework.cloud</groupId> <artifactId>spring-cloud-starter-netflix-zuul</artifactId> 
+			</dependency> <dependency> <groupId>org.springframework.boot</groupId> <artifactId>spring-boot-devtools</artifactId> 
+			<scope>runtime</scope> </dependency> -->
 
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -63,7 +54,15 @@
 			<artifactId>jjwt</artifactId>
 			<version>0.9.1</version>
 		</dependency>
-		
+
+		<!-- correlation ID dependency -->
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-sleuth</artifactId>
+		</dependency>
+
+
 		<!-- API UI Dependencies -->
 
 		<dependency>
@@ -71,13 +70,13 @@
 			<artifactId>springfox-swagger2</artifactId>
 			<version>2.9.2</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>io.springfox</groupId>
 			<artifactId>springfox-swagger-ui</artifactId>
 			<version>2.9.2</version>
 		</dependency>
-		
+
 		<!-- jUnit Dependencies -->
 
 		<dependency>
@@ -98,7 +97,7 @@
 			<artifactId>mockito-core</artifactId>
 			<version>1.10.19</version>
 		</dependency>
-		
+
 		<!-- DB Dependencies -->
 
 		<dependency>
@@ -111,7 +110,7 @@
 			<artifactId>mysql-connector-java</artifactId>
 			<scope>runtime</scope>
 		</dependency>
-		
+
 		<!-- Logging Dependencies -->
 
 		<dependency>
@@ -119,7 +118,7 @@
 			<artifactId>slf4j-api</artifactId>
 			<version>1.7.13</version>
 		</dependency>
-		
+
 	</dependencies>
 
 	<dependencyManagement>
@@ -140,63 +139,51 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			
-			<!-- <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-checkstyle-plugin</artifactId>
-                <executions>
-                <execution>
-                    <id>validate</id>
-                    <phase>validate</phase>
-                    <configuration>
-                        <encoding>UTF-8</encoding>
-                        <consoleOutput>true</consoleOutput>
-                        <failsOnError>true</failsOnError>
-                        <linkXRef>false</linkXRef>
-                    </configuration>
-                    <goals>
-                        <goal>check</goal>
-                    </goals>
-                </execution>
-            </executions>
-          </plugin>
-          <plugin>
-	           <groupId>org.apache.maven.plugins</groupId>
-		           	<artifactId>maven-pmd-plugin</artifactId>
-		           	<configuration>
-	               		<analysisCache>true</analysisCache> enable incremental analysis
-	               		<analysisCacheLocation>${project.build.directory}/pmd/pmd.cache</analysisCacheLocation> Optional: points to this location by default
-	               		<failOnViolation>true</failOnViolation> this is actually true by default, but can be disabled
-	               		<printFailingErrors>true</printFailingErrors>
-	               </configuration>
-         <executions>
-	          <execution>
-	            <goals>
-	              <goal>check</goal>
-	            </goals>
-	          </execution>
-        </executions>
-         </plugin> -->
-	           <plugin>
-	               <groupId>org.jacoco</groupId>
-	               <artifactId>jacoco-maven-plugin</artifactId>
-	               <version>0.8.2</version>
-	               <executions>
-	                      <execution>
-	                             <goals>
-	                                    <goal>prepare-agent</goal>
-	                             </goals>
-	                      </execution>
-	                      <!-- attached to Maven test phase -->
-	                      <execution>
-	                             <id>report</id>
-	                             <phase>test</phase>
-	                             <goals>
-	                                    <goal>report</goal>
-	                             </goals>
-	                      </execution>
-	               </executions>
-	         </plugin>
+
+			<!-- <plugin> <groupId>org.apache.maven.plugins</groupId> <artifactId>maven-checkstyle-plugin</artifactId> 
+				<executions> <execution> <id>validate</id> <phase>validate</phase> <configuration> 
+				<encoding>UTF-8</encoding> <consoleOutput>true</consoleOutput> <failsOnError>true</failsOnError> 
+				<linkXRef>false</linkXRef> </configuration> <goals> <goal>check</goal> </goals> 
+				</execution> </executions> </plugin> <plugin> <groupId>org.apache.maven.plugins</groupId> 
+				<artifactId>maven-pmd-plugin</artifactId> <configuration> <analysisCache>true</analysisCache> 
+				enable incremental analysis <analysisCacheLocation>${project.build.directory}/pmd/pmd.cache</analysisCacheLocation> 
+				Optional: points to this location by default <failOnViolation>true</failOnViolation> 
+				this is actually true by default, but can be disabled <printFailingErrors>true</printFailingErrors> 
+				</configuration> <executions> <execution> <goals> <goal>check</goal> </goals> 
+				</execution> </executions> </plugin> -->
+			<plugin>
+				<groupId>org.jacoco</groupId>
+				<artifactId>jacoco-maven-plugin</artifactId>
+				<version>0.8.2</version>
+				<configuration>
+					<outputDirectory>${project.reporting.outputDirectory}/jacoco-ut</outputDirectory>
+					<excludes>
+						<exclude>**/com/hcl/cloud/uaa/bean/**/*</exclude>
+						<exclude>**/com/hcl/cloud/uaa/constant/**/*</exclude>
+						<exclude>**/com/hcl/cloud/uaa/exception/**/*</exclude>
+						<exclude>**/com/hcl/cloud/uaa/repository/**/*</exclude>
+						<exclude>**/com/hcl/cloud/uaa/swagger/**/*</exclude>
+						<exclude>**/com/hcl/cloud/uaa/service/**/*</exclude>
+						<exclude>**/com/hcl/cloud/uaa/service/impl/**/*</exclude>
+						<exclude>**/com/hcl/cloud/uaa/controller/Controller.html</exclude>
+					</excludes>
+				</configuration>
+				<executions>
+					<execution>
+						<goals>
+							<goal>prepare-agent</goal>
+						</goals>
+					</execution>
+					<!-- attached to Maven test phase -->
+					<execution>
+						<id>report</id>
+						<phase>test</phase>
+						<goals>
+							<goal>report</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 </project>

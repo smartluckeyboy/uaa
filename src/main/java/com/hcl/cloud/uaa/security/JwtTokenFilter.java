@@ -48,7 +48,7 @@ public class JwtTokenFilter extends GenericFilterBean {
                 jwtTokenProvider.validateToken(token);
                 logger.error(" Token Validated");
             } catch (JwtException | IllegalArgumentException e) {
-            	logger.error(" Token is not Valid");
+            	logger.error(" Token authentication failed, Please provide a valid token.");
             	throwError(request,response);
 				return;
             }
@@ -68,7 +68,7 @@ public class JwtTokenFilter extends GenericFilterBean {
 		ErrorResponse errorResponse = new ErrorResponse();
 		errorResponse.setTimestamp(Instant.now ().toString());
 		errorResponse.setStatus(HttpStatus.UNAUTHORIZED.value());
-		errorResponse.setMessage("Invalid JWT token");
+		errorResponse.setMessage("Token authentication failed, Please provide valid token.");
 		errorResponse.setPath(request.getRequestURL().toString());
 		errorResponse.setError("UNAUTHORIZED");
 		
