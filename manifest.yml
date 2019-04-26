@@ -10,3 +10,5 @@ applications:
   - newrelic
   routes:
   - route: uaa.apps.cnpsandbox.dryice01.in.hclcnlabs.com
+  env:
+    spring.datasource.driver-class-name: com.mysql.jdbc.Driver
