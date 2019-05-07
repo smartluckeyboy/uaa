@@ -21,7 +21,7 @@ import com.hcl.cloud.uaa.bean.JwtToken;
 import com.hcl.cloud.uaa.service.ITokenService;
 
 @RestController
-@RequestMapping("/uaa")
+//@RequestMapping("/uaa")
 public class TokenDecoderController {
 
 	private static final Logger logger = LoggerFactory.getLogger(TokenDecoderController.class);
