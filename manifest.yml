@@ -9,4 +9,4 @@ applications:
   - log-drain
   - newrelic
   routes:
-    - route: products.apps.sandbox.cflab01.in.hclcnlabs.com
+    - route: uaa.apps.sandbox.cflab01.in.hclcnlabs.com
