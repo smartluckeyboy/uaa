@@ -53,7 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/uaa/tokenInfo/")
                 .antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**", "/swagger-ui.html", "/webjars/**")
                 .antMatchers(HttpMethod.OPTIONS, "/**"); // Request type options should be allowed.
-        web.ignoring().antMatchers("/zipkin/**");
+       // web.ignoring().antMatchers("/zipkin/**");
     }
 
     @Bean

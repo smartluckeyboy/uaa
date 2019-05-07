@@ -28,13 +28,11 @@ import org.springframework.web.client.RestTemplate;
 
 import com.hcl.cloud.uaa.swagger.SwaggerConfig;
 
-import zipkin.server.EnableZipkinServer;
-
 
 
 @Import(SwaggerConfig.class)
 @SpringBootApplication
-@EnableZipkinServer
+//@EnableZipkinServer
 public class UAA {
 
 	public static void main(String[] args) {
