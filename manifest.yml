@@ -6,8 +6,6 @@ applications:
   memory: 750M
   services:
   - uaadbservice
-  - log-drain
-  - newrelic
   - cloud-config-server
   routes:
     - route: uaa.apps.sandbox.cflab01.in.hclcnlabs.com
