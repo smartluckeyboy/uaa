@@ -6,6 +6,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ import com.hcl.cloud.uaa.bean.LoginRequest;
 import com.hcl.cloud.uaa.service.ILoginService;
 
 @Controller
+@RefreshScope
 //@RequestMapping("/uaa")
 public class LoginController {
 	public static final Logger logger=LoggerFactory.getLogger(LoginController.class);

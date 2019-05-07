@@ -5,6 +5,7 @@ import static org.junit.Assert.assertNotNull;
 import org.junit.Before;
 import org.junit.Test;
 import org.powermock.api.mockito.PowerMockito;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import com.hcl.cloud.uaa.bean.JwtToken;
 import com.hcl.cloud.uaa.bean.User;
@@ -28,6 +29,7 @@ public class JwtTokenProviderTest {
 	}
 
 	@Test
+	@ExceptionHandler(Exception.class)
 	public void createTokenTest() {
 		jwtTokenProvider.setiTokenService(tokenServiceImpl);
 		jwtTokenProvider.setJwtTokenRepository(jwtTokenRepository);

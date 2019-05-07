@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,7 +18,6 @@ import org.springframework.stereotype.Component;
 
 import com.hcl.cloud.uaa.bean.JwtToken;
 import com.hcl.cloud.uaa.bean.User;
-import com.hcl.cloud.uaa.constant.UaaConstant;
 import com.hcl.cloud.uaa.repository.JwtTokenRepository;
 import com.hcl.cloud.uaa.service.ITokenService;
 
@@ -42,6 +42,11 @@ public class JwtTokenProvider {
 
     @Autowired
     private UserDetailsService userDetailsService;
+    
+    @Value("${token.exp.validity}")
+    private long tokenExp;
+
+    
 
     @PostConstruct
     protected void init() {
@@ -55,7 +60,8 @@ public class JwtTokenProvider {
         JwtToken jwtToken = new JwtToken();
         
         Date now = new Date();
-        Date validity = new Date(now.getTime() + UaaConstant.TOKEN_EXP_VALIDITY);
+        //Date validity = new Date(now.getTime() + UaaConstant.TOKEN_EXP_VALIDITY);
+        Date validity = new Date(now.getTime() + tokenExp);
 
         String token =  Jwts.builder()
                 .setClaims(claims)
