@@ -16,7 +16,6 @@ import com.hcl.cloud.uaa.security.JwtTokenProvider;
 import com.hcl.cloud.uaa.service.impl.LoginServiceImpl;
 
 
-@RunWith(PowerMockRunner.class)
 public class LoginServiceTest {
 	
 	private AuthenticationManager authenticationManager; 

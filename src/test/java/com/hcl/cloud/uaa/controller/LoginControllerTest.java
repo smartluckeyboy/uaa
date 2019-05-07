@@ -15,7 +15,6 @@ import com.hcl.cloud.uaa.controller.LoginController;
 import com.hcl.cloud.uaa.service.ILoginService;
 import com.hcl.cloud.uaa.service.impl.LoginServiceImpl;
 
-@RunWith(PowerMockRunner.class)
 public class LoginControllerTest {
 	
 	LoginController controller = new LoginController();

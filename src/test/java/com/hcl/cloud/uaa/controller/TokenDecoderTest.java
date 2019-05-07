@@ -17,7 +17,6 @@ import com.hcl.cloud.uaa.bean.JwtToken;
 import com.hcl.cloud.uaa.controller.TokenDecoderController;
 import com.hcl.cloud.uaa.service.impl.TokenServiceImpl;
 
-@RunWith(PowerMockRunner.class)
 public class TokenDecoderTest {
 	
 	TokenDecoderController tokenDecoder = new TokenDecoderController();
