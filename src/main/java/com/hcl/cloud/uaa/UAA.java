@@ -1,6 +1,7 @@
 package com.hcl.cloud.uaa;
 
 import java.io.IOException;
+
 import java.net.HttpURLConnection;
 import java.net.Proxy;
 import java.net.URL;
@@ -26,9 +27,14 @@ import org.springframework.web.client.DefaultResponseErrorHandler;
 import org.springframework.web.client.RestTemplate;
 
 import com.hcl.cloud.uaa.swagger.SwaggerConfig;
- 
-@SpringBootApplication
+
+import zipkin.server.EnableZipkinServer;
+
+
+
 @Import(SwaggerConfig.class)
+@SpringBootApplication
+@EnableZipkinServer
 public class UAA {
 
 	public static void main(String[] args) {
