@@ -5,7 +5,9 @@ applications:
   instances: 1
   memory: 750M
   services:
-  - userdbservice
-  - cloud-config-server
+    - userdbservice
+    - cloud-config-server
+    - log-drain
+    - appdynamics
   routes:
     - route: uaa.apps.sandbox.cflab01.in.hclcnlabs.com

@@ -31,7 +31,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
         // Entry points
         http.authorizeRequests()
-                .antMatchers("/**/signin/**","/products/").permitAll()
+                .antMatchers("/**/signin/**","/products/","**/actuator/refresh","/actuator/refresh","/actuator/refresh/*","/actuator/refresh").permitAll()
                 // Disallow everything else..
                 .anyRequest().authenticated();
 
@@ -50,8 +50,8 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     	// Allow eureka client to be accessed without authentication //.antMatchers("/*/")//
         web.ignoring()
                 .antMatchers("/user/") // ("/userDetails/add")//
-                .antMatchers("/uaa/tokenInfo/")
-                .antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**", "/swagger-ui.html", "/webjars/**")
+                .antMatchers("/uaa/tokenInfo/","/actuator/refresh","/actuator/refresh/*","/actuator/refresh")
+                .antMatchers("/v2/api-docs", "/configuration/ui", "/swagger-resources/**", "/configuration/**", "/swagger-ui.html", "/webjars/**","**/actuator/refresh")
                 .antMatchers(HttpMethod.OPTIONS, "/**"); // Request type options should be allowed.
        // web.ignoring().antMatchers("/zipkin/**");
     }

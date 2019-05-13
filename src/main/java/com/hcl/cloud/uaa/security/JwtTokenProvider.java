@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -27,6 +28,7 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 
 @Component
+@RefreshScope
 public class JwtTokenProvider {
 	
 	private static final Logger logger = LoggerFactory.getLogger(JwtTokenProvider.class);
@@ -62,6 +64,7 @@ public class JwtTokenProvider {
         Date now = new Date();
         //Date validity = new Date(now.getTime() + UaaConstant.TOKEN_EXP_VALIDITY);
         Date validity = new Date(now.getTime() + tokenExp);
+        logger.info("tokenExp: "+ tokenExp);
 
         String token =  Jwts.builder()
                 .setClaims(claims)
@@ -70,20 +73,20 @@ public class JwtTokenProvider {
                 .signWith(SignatureAlgorithm.HS256, secretKey)
                 .compact();
         
-        logger.debug(" Token Created Successfully");
+        logger.info(" Token Created Successfully");
        
         JwtToken tokenInfo = iTokenService.getInfoByEmail(user.getEmail());
         
         if (null != tokenInfo) {
         	tokenInfo.setToken(token);
         	jwtTokenRepository.save(tokenInfo);
-        	logger.debug(" Existing User token details saved successfully");
+        	logger.info(" Existing User token details saved successfully");
         } else {
         	jwtToken.setToken(token);
             jwtToken.setEmail(user.getEmail());
             jwtToken.setUserId(user.getUserName());
             jwtTokenRepository.save(jwtToken);
-            logger.debug(" New User token details saved successfully");
+            logger.info(" New User token details saved successfully");
 		}
         return token;
     }
