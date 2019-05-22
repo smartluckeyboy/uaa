@@ -2,13 +2,13 @@
 applications: 
 - name: uaa
   path: target/uaa-0.0.1-SNAPSHOT.jar
+  health-check-type: none
   instances: 1
   memory: 2G
-  health-check-type: none
   services:
     - userdbservice
     - cloud-config-server
     - log-drain
-    - appdynamics
+    - newrelic
   routes:
     - route: uaa.apps.sandbox.cflab01.in.hclcnlabs.com
