@@ -35,7 +35,7 @@ public class LoginController {
     @ResponseBody
     public ResponseEntity<AuthResponse> login(@RequestBody LoginRequest loginRequest) {
         String token = iLoginService.login(loginRequest.getUsername(),loginRequest.getPassword());
-        logger.info(" Access Token : " + token);
+        logger.debug(" Access Token : " + token);
         HttpHeaders headers = new HttpHeaders();
         List<String> headerlist = new ArrayList<>();
         List<String> exposeList = new ArrayList<>();

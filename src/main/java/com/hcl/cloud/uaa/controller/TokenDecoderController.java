@@ -44,7 +44,7 @@ public class TokenDecoderController {
 
 		if (null != tokenInfo && !StringUtils.isEmpty(tokenInfo.getUserId())) {
 
-			logger.info(" UserId: " + tokenInfo.getUserId());
+			logger.debug(" UserId: " + tokenInfo.getUserId());
 			userId = tokenInfo.getUserId();
 		}
 
